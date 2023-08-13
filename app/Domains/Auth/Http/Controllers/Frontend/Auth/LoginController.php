@@ -8,8 +8,6 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 use LangleyFoxall\LaravelNISTPasswordRules\PasswordRules;
-use GMBF\MyanmarPhoneNumber;
-use Jenssegers\Agent\Agent;
 
 /**
  * Class LoginController.
@@ -28,6 +26,7 @@ class LoginController
     */
 
     use AuthenticatesUsers;
+
     /**
      * Where to redirect users after login.
      *
@@ -36,7 +35,6 @@ class LoginController
     public function redirectPath()
     {
         return route(homeRoute());
-
     }
 
     /**
@@ -46,13 +44,7 @@ class LoginController
      */
     public function showLoginForm()
     {
-        $agent = new Agent();
-
-        $checkDevice = $agent->isMobile() ? 'mobile':'frontend';
-
-        // return view($checkDevice.'.auth.login');
-        return view($checkDevice.'.auth.login-register');
-            
+        return view('frontend.auth.login');
     }
 
     /**
@@ -113,33 +105,9 @@ class LoginController
         }
 
         event(new UserLoggedIn($user));
-        \Log::info('User Logged In: '. auth()->user()->name);
+
         if (config('boilerplate.access.user.single_login')) {
             auth()->logoutOtherDevices($request->password);
         }
-    }
-
-    /**
-     * Get the login username to be used by the controller.
-     *
-     * @return string
-     */
-    public function username()
-    {
-        return config('access.users.username');
-    }
-
-    protected function credentials(Request $request)
-    {
-        if (is_numeric($request->get('email'))) {
-            $phoneNumber = new MyanmarPhoneNumber();
-            $phoneNumber = $phoneNumber->add_prefix($request->get('email'));
-            return ['mobile' => $phoneNumber, 'password' => $request->get('password')];
-        } elseif (filter_var($request->get('email'), FILTER_VALIDATE_EMAIL)) {
-            return ['email' => $request->get('email'), 'password' => $request->get('password')];
-        } else {
-            return [];
-        }
-
     }
 }

@@ -30,7 +30,6 @@ class DatabaseSeeder extends Seeder
         $this->call(AnnouncementSeeder::class);
 
         Model::reguard();
-        // OrderItem::newFactory()->count(10)->create();
 
     }
 }

@@ -37,8 +37,8 @@
                     @if (config('boilerplate.access.user.registration'))
                         <li class="nav-item">
                             <x-utils.link
-                                :href="route('frontend.auth.first.step.register')"
-                                :active="activeClass(Route::is('frontend.auth.first.step.register'))"
+                                :href="route('frontend.auth.register')"
+                                :active="activeClass(Route::is('frontend.auth.register'))"
                                 :text="__('Register')"
                                 class="nav-link" />
 

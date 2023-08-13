@@ -8,7 +8,7 @@
             <div class="col-md-8">
                 <div class="row">
 
-                    <h1>PADESAR</h1>
+                    <h1>{{appName()}}</h1>
 
                 </div><!--row-->
                 <div class="row">

@@ -1,7 +1,4 @@
-## Laravel Boilerplate (Current: Laravel 8.*) ([Demo](https://demo.laravel-boilerplate.com))
-
-[![Latest Stable Version](https://poser.pugx.org/rappasoft/laravel-boilerplate/v/stable)](https://packagist.org/packages/rappasoft/laravel-boilerplate)
-[![Latest Unstable Version](https://poser.pugx.org/rappasoft/laravel-boilerplate/v/unstable)](https://packagist.org/packages/rappasoft/laravel-boilerplate) 
+## Laravel Boilerplate (Current: Laravel 8.*)  
 <br/>
 [![StyleCI](https://styleci.io/repos/30171828/shield?style=plastic)](https://github.styleci.io/repos/30171828)
 ![Tests](https://github.com/rappasoft/laravel-boilerplate/workflows/Tests/badge.svg?branch=master)
@@ -17,13 +14,12 @@
 **User:** user@user.com  
 **Password:** secret
 
-### Official Documentation
+### Documentation
 
-[Click here for the official documentation](http://laravel-boilerplate.com)
+php artisan module:make module-name
+php artisan module:migrate module-name
+php artisan module:seed module-name
 
-### Slack Channel
-
-Please join us in our Slack channel to get faster responses to your questions. Get your invite here: https://laravel-5-boilerplate.herokuapp.com
 
 ### Introduction
 

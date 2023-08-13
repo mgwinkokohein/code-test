@@ -1,7 +1,6 @@
 <?php
 
 use Carbon\Carbon;
-use Jenssegers\Agent\Agent;
 
 if (! function_exists('appName')) {
     /**
@@ -38,29 +37,15 @@ if (! function_exists('homeRoute')) {
      */
     function homeRoute()
     {
-        $agent = new Agent();
+        // $agent = new Agent();
         if (auth()->check()) {
 
             if (auth()->user()->isMasterAdmin()) {
                 return 'admin.dashboard';
             }
 
-            if (auth()->user()->isVendor()) {
-
-                if ( $agent->isMobile()){
-                    return 'frontend.vendor_home';
-                }else{
-                    return 'admin.dashboard';
-                }
-            }
-
             if (auth()->user()->isUser()) {
-
-                if ( $agent->isMobile()){
-                     return 'frontend.index';
-                }else{
-                    return 'frontend.user.dashboard';
-                }
+                return 'frontend.user.dashboard';   
             }
         }
 

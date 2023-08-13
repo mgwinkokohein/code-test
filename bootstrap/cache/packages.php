@@ -64,17 +64,6 @@
       0 => 'JamesMills\\LaravelTimezone\\LaravelTimezoneServiceProvider',
     ),
   ),
-  'jenssegers/agent' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Jenssegers\\Agent\\AgentServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'Agent' => 'Jenssegers\\Agent\\Facades\\Agent',
-    ),
-  ),
   'lab404/laravel-impersonate' => 
   array (
     'providers' => 
@@ -89,18 +78,18 @@
       0 => 'LangleyFoxall\\LaravelNISTPasswordRules\\ServiceProvider',
     ),
   ),
+  'laravel/passport' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'Laravel\\Passport\\PassportServiceProvider',
+    ),
+  ),
   'laravel/sail' => 
   array (
     'providers' => 
     array (
       0 => 'Laravel\\Sail\\SailServiceProvider',
-    ),
-  ),
-  'laravel/sanctum' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'Laravel\\Sanctum\\SanctumServiceProvider',
     ),
   ),
   'laravel/socialite' => 

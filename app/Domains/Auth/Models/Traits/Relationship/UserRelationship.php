@@ -3,9 +3,7 @@
 namespace App\Domains\Auth\Models\Traits\Relationship;
 
 use App\Domains\Auth\Models\PasswordHistory;
-use Modules\Customer\Entities\Customer;
-use Modules\Vendor\Entities\Vendor;
-use Modules\Order\Entities\Order;
+use Modules\Movie\Entities\Movie;
 
 /**
  * Class UserRelationship.
@@ -24,22 +22,9 @@ trait UserRelationship
      * Get the dealer associated with the user.
      */
 
-    public function vendor()
+    public function movies()
     {
-        return $this->hasOne(Vendor::class);
-    }
-
-    /**
-     * Get the customer associated with the user.
-     */
-    public function customer()
-    {
-        return $this->hasOne(Customer::class);
-    }
-
-    public function orders()
-    {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Movie::class);
     }
 
     

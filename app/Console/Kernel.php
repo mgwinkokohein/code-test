@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \Modules\RecycleBin\Console\BinCheck::class,
+        // 
     ];
 
     /**

@@ -32,83 +32,13 @@
     </ul>
 
     <ul class="c-header-nav ml-auto mr-5">
-        <li class="c-header-nav-item  dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-              <i class="fas fa-clipboard-list"></i>
-              <span class="badge badge-danger navbar-badge">{{$no_deliver_order}}</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <a href="#" class="dropdown-item">
-                    <!-- Message Start -->
-                    <div class="media">
-                        <div class="media-body">
-                            <p class="text-sm">
-                                @if($no_deliver_order == 0)
-                                    You don't have notifications
-                                @else
-                                    Hello Administrator, We got {{$no_deliver_order}} inactive order(s) within 7 Days in Order Management
-                                @endif
-                            </p>
-                      </div>
-                    </div>
-                    <!-- Message End -->
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="{{ route('admin.order.index').'?notification=no_deliver' }}" class="dropdown-item dropdown-footer">See All</a>
-            </div>
-        </li>
-        <li class="c-header-nav-item  dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-              <i class="fas fa-cube"></i>
-              <span class="badge badge-danger navbar-badge">{{$inactive_product}}</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <a href="#" class="dropdown-item">
-                    <!-- Message Start -->
-                    <div class="media">
-                        <div class="media-body">
-                            <p class="text-sm">
-                                @if($inactive_product == 0)
-                                    You don't have notifications
-                                @else
-                                    Hello Administrator, We got {{$inactive_product}} inactive product(s) within 7 Days in Product Management
-                                @endif
-                            </p>
-                      </div>
-                    </div>
-                    <!-- Message End -->
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="{{ route('admin.product.index').'?notification=inactive' }}" class="dropdown-item dropdown-footer">See All</a>
-            </div>
-        </li>
-        <li class="c-header-nav-item  dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-              <i class="fas fa-bell"></i>
-              <span class="badge badge-danger navbar-badge">3</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <a href="#" class="dropdown-item">
-                    <!-- Message Start -->
-                    <div class="media">
-                        <div class="media-body">
-                            <p class="text-sm">
-                                You have 3 notifications
-                            </p>
-                      </div>
-                    </div>
-                    <!-- Message End -->
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item dropdown-footer">See All</a>
-            </div>
-        </li>
+        
         <li class="c-header-nav-item dropdown">
             <x-utils.link class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                 <x-slot name="text">
                     <div class="c-avatar">
                         <?php $logo = "https://gravatar.com/avatar/".md5(strtolower(trim(auth()->user()->email ? auth()->user()->email : 'testing@gmail.com')))."?s=".config('boilerplate.avatar.size')."&d=mp" ?>
-                        <img class="c-avatar-img" src="{{ $logo }}" alt="{{ $logged_in_user->email ?? $logged_in_user->mobile }}">
+                        <img class="c-avatar-img" src="{{ url('app_data/user-logo.jpg') }}" alt="{{ $logged_in_user->email }}">
                     </div>
                 </x-slot>
             </x-utils.link>

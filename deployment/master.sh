@@ -1,5 +1,5 @@
 echo "Deploy started"
-cd /var/www/padesar
+cd /var/www/laravel
 git pull origin master
 composer install -n
 php artisan migrate --force

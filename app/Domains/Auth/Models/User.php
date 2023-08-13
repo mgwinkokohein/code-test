@@ -18,7 +18,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Lab404\Impersonate\Models\Impersonate;
-use Laravel\Sanctum\HasApiTokens;
+// use Laravel\Sanctum\HasApiTokens;
+use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -61,12 +62,7 @@ class User extends Authenticatable implements MustVerifyEmail, TwoFactorAuthenti
         'last_login_ip',
         'to_be_logged_out',
         'provider',
-        'provider_id',
-        'is_vendor',
-        'is_customer',
-        'date_of_birth',
-        'gender',
-        'confirmation_code'
+        'provider_id'
     ];
 
     /**

@@ -28,10 +28,6 @@ Route::group(['as' => 'auth.'], function () {
 
         // These routes can not be hit if the password is expired
         Route::group(['middleware' => 'password.expires'], function () {
-            // this is otp verify
-            Route::get('/verify-otp', [VerificationController::class, 'verifyOtp'])->name('verify_otp');
-            Route::post('/verify-otp', [VerificationController::class, 'chkVerifyOtp'])->name('chk_verify_otp');
-
             // E-mail Verification
             Route::get('email/verify', [VerificationController::class, 'show'])->name('verification.notice');
             Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])
@@ -40,13 +36,6 @@ Route::group(['as' => 'auth.'], function () {
             Route::post('email/resend', [VerificationController::class, 'resend'])
                 ->name('verification.resend')
                 ->middleware('throttle:6,1');
-            Route::get('sms/verify', [VerificationController::class, 'smsVerificationForm'])->name('verification.with.sms');    
-            // Route::post('sms/verify', [VerificationController::class, 'checkVerificationCode'])->name('verification.post.code');    
-
-            // this for email or sms verification code
-            Route::get('code/verify', [VerificationController::class, 'codeVerificationForm'])->name('verification.code.get');
-            Route::post('code/verify', [VerificationController::class, 'checkVerificationCode'])->name('verification.code.post');
-            Route::post('code/resend', [VerificationController::class, 'resendCode'])->name('verification.code.resend')->middleware('throttle:2,10');
 
             // These routes require the users email to be verified
             Route::group(['middleware' => config('boilerplate.access.middleware.verified')], function () {
@@ -96,20 +85,13 @@ Route::group(['as' => 'auth.'], function () {
         Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
         Route::post('login', [LoginController::class, 'login']);
 
-        // First Step Registration
-        Route::get('first/register', [RegisterController::class, 'firstStepRegistrationForm'])->name('first.step.register')->middleware('is.done.first');
-        Route::post('first/register', [RegisterController::class, 'firstStepRegisterConfirm'])->name('first.register.confirm');
-
         // Registration
-        Route::get('register', [RegisterController::class, 'showRegistrationForm'])
-        ->name('register')
-        ->middleware('verify.with.code');
+        Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
         Route::post('register', [RegisterController::class, 'register']);
 
         // Password Reset
         Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-        // Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-        Route::post('password/post', [ForgotPasswordController::class, 'sendNewPassToEmailOrMobile'])->name('password.post');
+        Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
         Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
         Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 

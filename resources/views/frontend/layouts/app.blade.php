@@ -7,7 +7,7 @@
     <title>{{ appName() }} | @yield('title')</title>
     <meta name="keyword" content="@yield('meta_keyword', appName().','.config('app.meta_keywords'))">
     <meta name="description" content="@yield('meta_description', config('app.meta_description'))">
-    <meta name="author" content="@yield('meta_author', 'Evercrystal IT Solutions')">
+    <meta name="author" content="@yield('meta_author', 'code test')">
     @yield('meta')
 
     @stack('before-styles')
@@ -18,8 +18,7 @@
     @stack('after-styles')
     <style type="text/css">
         .navbar,.footer-bottom {
-            /*background-color: #0c2f55!important;*/
-            background-color: #183F35!important;
+            background-color: #0c2f55!important;
         }
         .navbar-light .navbar-nav .nav-link {
             color: #fff;

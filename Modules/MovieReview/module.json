@@ -1,0 +1,16 @@
+{
+    "name": "MovieReview",
+    "alias": "moviereview",
+    "description": "",
+    "keywords": [],
+    "active":1,
+    "order":0,
+    "group":0,
+    "priority": 0,
+    "providers": [
+        "Modules\\MovieReview\\Providers\\MovieReviewServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

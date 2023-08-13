@@ -164,6 +164,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Cviebrock\EloquentSluggable\ServiceProvider::class,
+        Laravel\Passport\PassportServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -184,7 +185,6 @@ return [
         App\Providers\RouteServiceProvider::class,
         Nwidart\Modules\LaravelModulesServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
-        Jenssegers\Agent\AgentServiceProvider::class,
     ],
 
     /*
@@ -240,7 +240,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Module' => Nwidart\Modules\Facades\Module::class,
         'Html' => Spatie\Html\Facades\Html::class,
-        'Agent' => Jenssegers\Agent\Facades\Agent::class,
     ],
 
 ];

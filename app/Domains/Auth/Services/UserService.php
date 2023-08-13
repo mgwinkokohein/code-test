@@ -14,25 +14,20 @@ use App\Services\BaseService;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Modules\Customer\Repositories\CustomerRepository;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Mail;
 
 /**
  * Class UserService.
  */
 class UserService extends BaseService
 {
-    protected $customer;
     /**
      * UserService constructor.
      *
      * @param  User  $user
      */
-    public function __construct(User $user, CustomerRepository $customer)
+    public function __construct(User $user)
     {
         $this->model = $user;
-        $this->customer = $customer;
     }
 
     /**
@@ -49,24 +44,6 @@ class UserService extends BaseService
         return $this->model::byType($type)->get();
     }
 
-    public function FirstStepRegisterUser(array $data = []): User
-    {
-        DB::beginTransaction();
-
-        try {
-            $user = $this->createUser($data);
-
-        } catch (Exception $e) {
-            DB::rollBack();
-
-            throw new GeneralException(__('There was a problem creating your account.'));
-        }
-
-        DB::commit();
-
-        return $user;
-    }
-
     /**
      * @param  array  $data
      * @return mixed
@@ -79,7 +56,6 @@ class UserService extends BaseService
 
         try {
             $user = $this->createUser($data);
-
         } catch (Exception $e) {
             DB::rollBack();
 
@@ -140,20 +116,17 @@ class UserService extends BaseService
             $user = $this->createUser([
                 'type' => $data['type'],
                 'name' => $data['name'],
-                'email' => isset($data['email']) ? $data['email'] : null,
-                'mobile' => isset($data['mobile']) ? $data['mobile'] : null,
+                'email' => $data['email'],
                 'password' => $data['password'],
-                // 'email_verified_at' => isset($data['email_verified']) && $data['email_verified'] === '1' ? now() : null,
-                'email_verified_at' => now(),
-                'active' => isset($data['active']) && $data['active'] == 1,
-                'is_vendor' => isset($data['is_vendor']),
-                'is_customer' => isset($data['is_customer']),
-                'date_of_birth' => isset($data['date_of_birth']) ? $data['date_of_birth'] : null,
+                'email_verified_at' => isset($data['email_verified']) && $data['email_verified'] === '1' ? now() : null,
+                'active' => isset($data['active']) && $data['active'] === '1',
             ]);
-           
-            $user->syncRoles($data['roles'] ?? []);
-            $user->syncPermissions($data['permissions'] ?? []);
 
+            $user->syncRoles($data['roles'] ?? []);
+
+            if (! config('boilerplate.access.user.only_roles')) {
+                $user->syncPermissions($data['permissions'] ?? []);
+            }
         } catch (Exception $e) {
             DB::rollBack();
 
@@ -166,8 +139,7 @@ class UserService extends BaseService
 
         // They didn't want to auto verify the email, but do they want to send the confirmation email to do so?
         if (! isset($data['email_verified']) && isset($data['send_confirmation_email']) && $data['send_confirmation_email'] === '1') {
-            // $user->sendEmailVerificationNotification();
-            $this->info('skip email verification');
+            $user->sendEmailVerificationNotification();
         }
 
         return $user;
@@ -184,11 +156,11 @@ class UserService extends BaseService
     {
         DB::beginTransaction();
 
-        try {
+        // try {
             $user->update([
                 'type' => $user->isMasterAdmin() ? $this->model::TYPE_ADMIN : $data['type'] ?? $user->type,
                 'name' => $data['name'],
-                'email' => isset($data['email']) ? $data['email'] : null, // 23-01-2023 update
+                // 'email' => $data['email'],
             ]);
 
             if (! $user->isMasterAdmin()) {
@@ -199,11 +171,11 @@ class UserService extends BaseService
                     $user->syncPermissions($data['permissions'] ?? []);
                 }
             }
-        } catch (Exception $e) {
-            DB::rollBack();
+        // } catch (Exception $e) {
+        //     DB::rollBack();
 
-            throw new GeneralException(__('There was a problem updating this user. Please try again.'));
-        }
+        //     throw new GeneralException(__('There was a problem updating this user. Please try again.'));
+        // }
 
         event(new UserUpdated($user));
 
@@ -354,51 +326,8 @@ class UserService extends BaseService
             'password' => $data['password'] ?? null,
             'provider' => $data['provider'] ?? null,
             'provider_id' => $data['provider_id'] ?? null,
-            'email_verified_at' => $data['email_verified_at'] ?? null,
-            'mobile' => $data['mobile'] ?? null,
+            'email_verified_at' => $data['email_verified_at'] ?? now(),
             'active' => $data['active'] ?? true,
-            'is_vendor' => $data['is_vendor'] ?? true,
-            'is_customer' => $data['is_customer'] ?? true,
-            'confirmation_code' => $data['confirmation_code'] ?? null,
-            'date_of_birth' => date('Y-m-d', strtotime($data['date_of_birth'])) ?? null,
-            'gender' => $data['gender'] ?? null,
         ]);
-    }
-
-    public function sendOtpEmailOrSms($user)
-    {
-        //$user can be user instance or id
-        if (! $user instanceof User) {
-            $user = $this->find($user);
-        }
-
-        $otpCode = Str::random(6);
-
-        \Cache::put($user->id.'_opt_code',$otpCode,300);
-        
-        if ($user->mobile) {
-            $class = 1;
-            $priority = 6;
-            $description = 'OTP SMS!';
-            $sender = appName();
-            $mobile = $user->mobile;
-            $message = appName()." OTP code is: ".$otpCode;
-
-            send_sms($mobile,$message,$class,$priority,$description,$sender);
-            
-        } else {
-            $body = view('frontend.auth.otp.otp', ['otp_code' => $otpCode])->render();
-
-            $response = Mail::send([], [], function ($message) use ($user, $body) {
-                        $message->setBody($body, 'text/html');
-                        $message->to($user->email, $user->name)->subject(app_name() . ': OPT Code');
-            });
-
-            if (count(Mail::failures()) > 0) {
-                throw new GeneralException("There was a problem sending the OPT code e-mail");
-            }
-        }
-
-        return true;
     }
 }

@@ -27,24 +27,22 @@ class UserSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => 'secret',
             'email_verified_at' => now(),
-            'mobile' => '959452171895',
+            'mobile' => '09898989899',
             'active' => true,
-            'is_vendor' => 0,
-            'is_customer' => 0,
         ]);
 
-        if (app()->environment(['local', 'testing'])) {
-            User::create([
-                'type' => User::TYPE_USER,
-                'name' => 'Test User',
-                'email' => 'user@user.com',
-                'password' => 'secret',
-                'email_verified_at' => now(),
-                'mobile' => null,
-                'active' => true,
-                'is_vendor' => 0,
-                'is_customer' => 0,
-            ]);
+        for ($i=1 ; $i <=10 ; $i++){
+            if (app()->environment(['local', 'testing'])) {
+                User::create([
+                    'type' => User::TYPE_USER,
+                    'name' => 'Test User'.$i,
+                    'email' => 'user'.$i.'@user.com',
+                    'password' => 'secret'.$i,
+                    'email_verified_at' => now(),
+                    'mobile' => null,
+                    'active' => true,
+                ]);
+            }
         }
 
         $this->enableForeignKeys();

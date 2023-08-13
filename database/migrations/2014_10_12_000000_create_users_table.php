@@ -18,15 +18,15 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->enum('type', [User::TYPE_ADMIN, User::TYPE_USER])->default(User::TYPE_USER);
             $table->string('name');
-            $table->string('email')->unique()->nullable();
+            $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('mobile')->unique()->nullable();
             $table->string('password')->nullable();
             $table->timestamp('password_changed_at')->nullable();
             $table->unsignedTinyInteger('active')->default(1);
             $table->string('timezone')->nullable();
-            $table->tinyInteger('is_vendor')->default(0)->unsigned();
-            $table->tinyInteger('is_customer')->default(0)->unsigned();
+            // $table->tinyInteger('is_vendor')->default(0)->unsigned();
+            // $table->tinyInteger('is_customer')->default(0)->unsigned();
             $table->timestamp('last_login_at')->nullable();
             $table->string('last_login_ip')->nullable();
             $table->boolean('to_be_logged_out')->default(false);

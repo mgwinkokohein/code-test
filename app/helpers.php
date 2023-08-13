@@ -114,45 +114,23 @@ if (! function_exists('rand_color')) {
     }
 }
 
-if (! function_exists('send_sms')) {
-
-    function send_sms($mobile,$message,$description='SMS',$class=1,$priority=0)
+if (! function_exists('api_response')) {
+    /**
+     * Helper to api response json.
+     *
+     * @return json
+     */
+    function api_response($data=array(),$status=200)
     {
-        if(config('sms.sms_poh_enable') == 'true')
-        {
-    
-            $sender = appName();
-            $input = array(
-                    'to'      => $mobile,
-                    'message' => $message,
-                    'sender'  => $sender
-                    );
-            $input = json_encode($input);
-
-            $http = new GuzzleHttpC(['headers' => 
-                                            array( 
-                                            'Authorization' => 'Bearer '.config('sms.sms_poh_token'),
-                                            'Content-Type' => 'application/json' 
-                                            )
-                                    ]);
-            try{
-
-                $response = $http->post(config('sms.sms_poh_host'),[
-                    'body' => $input
-                ]);
-                $response = json_decode($response->getBody(), true);
-                
-                \Log::notice(' Send SMS Response : '.$mobile.' '. json_encode($response));
-    
-                return true;
-            }
-            catch(BadResponseException $e){
-            $response = $e->getResponse();                              
-            \Log::error(' Send SMS Error Response : '.$mobile.' '. json_encode($response));
-
-            return false;
-            }
+        if($status >= 200 && $status <= 300){
+            $data['success'] = true;
         }
+        else{
+            $data['success'] = false;
+        }
+        return response()->json($data,$status);
     }
 }
+
+
 

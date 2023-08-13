@@ -79,6 +79,6 @@ trait UserScope
 
     public function scopeNotVendorAndCustomer($query)
     {
-        return $query->where('is_vendor',0)->where('is_customer',0);
+        return $query;
     }
 }
