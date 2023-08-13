@@ -1,5 +1,3 @@
-## Laravel(Current: Laravel 8.*)  
-<br/>
 ### Demo Credentials
 
 **Admin:** admin@admin.com  
@@ -21,22 +19,20 @@ To seed the module's database with sample data:
 php artisan module:seed module-name
 
 
-### Introduction
+### Cache
 
-Laravel Boilerplate provides you with a massive head start on any size web application. Out of the box it has features like a backend built on CoreUI with Spatie/Permission authorization. It has a frontend scaffold built on Bootstrap 4. Other features such as Two Factor Authentication, User/Role management, searchable/sortable tables built on my [Laravel Livewire tables plugin](https://github.com/rappasoft/laravel-livewire-tables), user impersonation, timezone support, multi-lingual support with 20+ built in languages, demo mode, and much more.
+In this system i use `Laravel's` Built-in Cache [cache docs](https://laravel.com/docs/8.x/cache)
 
-### Issues
+## Advantages of Cache
 
-If you come across any issues please [report them here](https://github.com/rappasoft/laravel-boilerplate/issues).
+Performance: Caching helps store frequently used data in memory, reducing the need to fetch it from slower data sources such as databases or APIs. This leads to faster response times and improved application performance
 
-### Contributing
+Reduced Database Load: By caching database query results, the load on the database server can decrease.
+Faster response times lead to a better user experience
 
-Thank you for considering contributing to the Laravel Boilerplate project! Please feel free to make any pull requests, or e-mail me a feature request you would like to see in the future to Anthony Rappa at rappa819@gmail.com.
 
-### Security Vulnerabilities
+## Disadvantages of Cache
 
-If you discover a security vulnerability within this boilerplate, please send an e-mail to Anthony Rappa at rappa819@gmail.com, or create a pull request if possible. All security vulnerabilities will be promptly addressed.
+Outdated Data: Cached data might not always reflect the most recent changes in the underlying data source.
+Memory Usage: Caching requires memory resources, and caching too much data could potentially lead to increased memory usage, affecting the overall server performance.
 
-### License
-
-MIT: [http://anthony.mit-license.org](http://anthony.mit-license.org)
