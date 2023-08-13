@@ -1,11 +1,5 @@
-## Laravel Boilerplate (Current: Laravel 8.*)  
+## Laravel(Current: Laravel 8.*)  
 <br/>
-[![StyleCI](https://styleci.io/repos/30171828/shield?style=plastic)](https://github.styleci.io/repos/30171828)
-![Tests](https://github.com/rappasoft/laravel-boilerplate/workflows/Tests/badge.svg?branch=master)
-<br/>
-![GitHub contributors](https://img.shields.io/github/contributors/rappasoft/laravel-boilerplate.svg)
-![GitHub stars](https://img.shields.io/github/stars/rappasoft/laravel-boilerplate.svg?style=social)
-
 ### Demo Credentials
 
 **Admin:** admin@admin.com  
@@ -16,8 +10,14 @@
 
 ### Documentation
 
+Replace `module-name` with the actual name of the module you're working with.
+
 php artisan module:make module-name
+
 php artisan module:migrate module-name
+
+To seed the module's database with sample data:
+
 php artisan module:seed module-name
 
 
